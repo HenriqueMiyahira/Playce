@@ -10,4 +10,4 @@ def home(request):
     #usuario = Usuarios.objects.get(id=11)
     #usuario.delete()
 
-    return render(request, 'index.html')
+    return render(request, 'home/index.html')
