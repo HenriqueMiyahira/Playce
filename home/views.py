@@ -2,12 +2,13 @@
 from django.shortcuts import render
 
 from .models import Usuarios
+from .models import Quadra
 
 # Create your views here.
 def home(request):
-    #user = Usuarios(nome='Pedro', email='pedrobardo@gmail.com')
-    #user.save()
-    #usuario = Usuarios.objects.get(id=11)
-    #usuario.delete()
+    quadras_do_banco = Quadra.objects.all()
+    contexto = {
+        'lista_de_quadras': quadras_do_banco
+    }
 
-    return render(request, 'home/index.html')
+    return render(request, 'home/index.html', contexto)
