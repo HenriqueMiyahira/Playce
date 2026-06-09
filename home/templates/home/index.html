@@ -1,1 +1,30 @@
-<h3>Olá mundo</h3>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Playce - Gerenciamento de Quadras</title>
+</head>
+<body>
+    <h1>Painel de Quadras - Playce</h1>
+    <hr>
+
+    <h3>Quadras Cadastradas</h3>
+    <ul>
+        {% for quadra in lista_de_quadras %}
+            <li>
+                <strong>{{ quadra.nome }}</strong> <br>
+                Esporte: {{ quadra.get_tipo_display }} <br> Preço por hora: R$ {{ quadra.preco_hora }} <br>
+                Status:
+                {% if quadra.disponivel %}
+                    <span>Disponível</span>
+                {% else %}
+                    <span>Indisponível</span>
+                {% endif %}
+            </li>
+            <br>
+        {%empty%}
+            <li>Nenhuma quadra cadastrada ainda. Vá ao /admin para cadastrar</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
