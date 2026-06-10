@@ -1,144 +1,219 @@
-/* GRID DE QUADRAS */
-.catalog-container {
-  max-width: 1200px;
-  margin: 2.5rem auto;
-  padding: 0 1.5rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
+/* CONFIGURAÇÕES BASE & RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.product-card {
-  background-color: #fff;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.03);
-  transition:
-    transform 0.3s,
-    box-shadow 0.3s;
-  display: flex;
-  flex-direction: column;
-}
-.product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
-}
-.product-image img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-.product-info {
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
-.category {
-  font-size: 0.8rem;
-  color: #10b981;
-  text-transform: uppercase;
-  font-weight: bold;
-  margin-bottom: 0.4rem;
-}
-.product-info h3 {
-  font-size: 1.2rem;
-  margin-bottom: 0.6rem;
-  color: #1e293b;
-}
-.price {
-  font-size: 1.4rem;
-  font-weight: bold;
-  color: #0f172a;
-  margin-bottom: 1.2rem;
-  margin-top: auto;
+body {
+    background-color: #f4f6f9;
+    color: #333;
+    overflow-x: hidden;
 }
 
-.btn-add {
-  background-color: #1e293b;
-  color: white;
-  border: none;
-  padding: 0.8rem;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 0.95rem;
-  transition: background-color 0.2s;
-}
-.btn-add:hover {
-  background-color: #0f172a;
-  border-left: 4px solid #34d399;
+/* NAVBAR ALINHADA */
+header {
+    background-color: #1e293b;
+    color: #fff;
+    padding: 1.1rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-/* SIDEBAR DE RESERVAS */
-.cart-sidebar {
-  position: fixed;
-  top: 0;
-  right: -360px;
-  width: 360px;
-  height: 100%;
-  background-color: white;
-  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-  z-index: 200;
-  transition: right 0.3s ease;
-  display: flex;
-  flex-direction: column;
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
 }
-.cart-sidebar.active {
-  right: 0;
+
+.logo span {
+    color: #34d399; /* Verde Esmeralda */
 }
-.cart-header {
-  padding: 1.5rem;
-  background-color: #1e293b;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+
+/* Menu Central de Links */
+.nav-menu {
+    display: flex;
+    gap: 2.2rem;
 }
-.close-btn {
-  cursor: pointer;
-  font-size: 1.3rem;
-  transition: color 0.2s;
+
+.nav-link {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: color 0.2s;
 }
-.close-btn:hover {
-  color: #ef4444;
+
+.nav-link:hover {
+    color: #34d399;
 }
-.cart-items {
-  padding: 1.5rem;
-  flex-grow: 1;
-  overflow-y: auto;
+
+/* Botão de Login à Direita */
+.btn-login {
+    background-color: transparent;
+    color: #fff;
+    border: 2px solid #34d399;
+    padding: 0.5rem 1.3rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
-.empty-cart {
-  text-align: center;
-  color: #94a3b8;
-  margin-top: 2rem;
-  font-size: 1rem;
+
+.btn-login:hover {
+    background-color: #34d399;
+    color: #1e293b;
 }
-.cart-footer {
-  padding: 1.5rem;
-  background-color: #f8fafc;
-  border-top: 1px solid #e2e8f0;
+
+/* ==========================================================================
+   BANNER PRINCIPAL (HERO SECTION)
+   ========================================================================== */
+.banner {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    color: white;
+    text-align: center;
+    padding: 5rem 1rem 4rem 1rem; /* Ajustado o espaçamento interno */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-.total-container {
-  display: flex;
-  justify-content: space-between;
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  color: #1e293b;
+
+.banner h2 {
+    font-size: 2.5rem;
+    margin-bottom: 0.8rem;
+    max-width: 800px;
 }
-.btn-checkout {
-  width: 100%;
-  background-color: #10b981;
-  color: white;
-  border: none;
-  padding: 0.8rem;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.2s;
+
+.banner p {
+    color: #cbd5e1;
+    font-size: 1.2rem;
+    max-width: 650px;
+    margin-bottom: 2rem; /* Espaço controlado antes da imagem */
 }
-.btn-checkout:hover {
-  background-color: #059669;
+
+/* CONTAINER DA IMAGEM */
+.banner_img {
+    max-width: 700px;  /* Limita a largura máxima para não cobrir a tela toda */
+    width: 90%;        /* Garante que fique responsivo em telas menores/celular */
+    margin: 0 auto;
+    border-radius: 12px; /* Bordas arredondadas elegantes */
+    overflow: hidden;   /* Força a imagem a respeitar o arredondamento da borda */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); /* Sombra para dar profundidade */
+    border: 3px solid rgba(255, 255, 255, 0.1); /* Micro borda sutil */
+}
+
+/* COMPORTAMENTO DA IMAGEM DE FATO */
+.banner_img img {
+    width: 100%;       /* Ocupa 100% do container de 700px */
+    height: 350px;     /* Define uma altura fixa proporcional */
+    object-fit: cover; /* Recorta e adapta a foto perfeitamente sem achatar ou esticar */
+    display: block;    /* Remove espaços em branco fantasmas embaixo da imagem */
+}
+
+/* Botão de Chamada para Ação (CTA) */
+.btn-cta {
+    display: inline-block;
+    background-color: #10b981; /* Verde esmeralda */
+    color: #ffffff;
+    padding: 0.9rem 2.2rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.05rem;
+    transition: background-color 0.2s, transform 0.2s;
+    box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2);
+}
+
+.btn-cta:hover {
+    background-color: #059669;
+    transform: translateY(-2px);
+}
+
+.btn-cta:active {
+    transform: translateY(0);
+}
+
+
+/* ==========================================================================
+   SEÇÃO DE DIFERENCIAIS (FEATURES)
+   ========================================================================== */
+.features-container {
+    max-width: 1200px;
+    margin: 5rem auto;
+    padding: 0 2rem;
+    text-align: center;
+}
+
+.features-title {
+    color: #1e293b;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+/* Grid Inteligente (Responsivo automático) */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
+}
+
+/* Cards de Vantagens */
+.feature-card {
+    background-color: #ffffff;
+    padding: 3rem 2rem;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    border-top: 4px solid #34d399; /* Detalhe em verde na borda superior */
+    transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.feature-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Ícones dos Cards */
+.feature-card i {
+    font-size: 2.8rem;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+    background: #f1f5f9;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: color 0.2s;
+}
+
+.feature-card:hover i {
+    color: #10b981; /* O ícone ganha cor ao passar o mouse no card */
+}
+
+.feature-card h3 {
+    color: #1e293b;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.7rem;
+}
+
+.feature-card p {
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.6;
 }

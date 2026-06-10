@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Playce | Gerenciamento de Quadras</title>
-    <link rel="stylesheet" href="{% static 'css/globals.css' %}">
+    <title>Playce | Sua Arena de Esportes</title>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="{% static 'css/globals.css' %}">
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
 <body>
@@ -15,78 +17,51 @@
         <div class="logo">
             <i class="fa-solid fa-ranking-star"></i> Play<span>ce</span>
         </div>
-        <div class="cart-icon" onclick="toggleSidebar()">
-            <i class="fa-solid fa-calendar-days"></i>
-            <span id="cart-count">0</span>
+        
+        <nav class="nav-menu">
+            <a href="#" class="nav-link">Home</a>
+            <a href="#" class="nav-link">Quadras</a>
+            <a href="#" class="nav-link">Gerenciamento</a>
+            <a href="#" class="nav-link">Lojas</a>
+        </nav>
+
+        <div class="nav-auth">
+            <a href="#" class="btn-login"><i class="fa-regular fa-user"></i> Login / Cadastro</a>
         </div>
     </header>
 
     <section class="banner">
-        <h2>Reserve sua Quadra</h2>
-        <p>Escolha o esporte, confira os horários disponíveis e jogue com a galera.</p>
+        <h2>A maior rede de complexos esportivos da região</h2>
+        <p>Alugue quadras de futebol, vôlei e tênis em poucos cliques. Chame os amigos e jogue!</p>
+        <br>
+        <div class="banner_img">
+            <img src="https://i.ibb.co/MxJrbp9N/campo.jpg" alt="campo" border="0">
+        </div>
     </section>
 
-    <main class="catalog-container">
+    <section class="features-container">
+        <h2 class="features-title">Por que escolher o Playce?</h2>
         
-        {% for quadra in lista_de_quadras %}
-        <div class="product-card">
-            <div class="product-image">
-                <img src="https://images.unsplash.com/photo-1545223178-5f6fd66b7440?w=600" alt="Quadra">
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fa-solid fa-bolt"></i>
+                <h3>Reserva Online</h3>
+                <p>Agende e garanta seu horário de jogo pelo nosso sistema em minutos, sem complicação.</p>
             </div>
-            <div class="product-info">
-                <span class="category">{{ quadra.get_tipo_display }}</span>
-                <h3>{{ quadra.nome }}</h3>
-                
-                <p class="price">R$ {{ quadra.preco_hora }} <span style="font-size: 0.9rem; font-weight: normal; color: #64748b;">/ hora</span></p>
-                
-                {% if quadra.disponivel %}
-                    <button class="btn-add" onclick="adicionarAoAgendamento('{{ quadra.nome }}', '{{ quadra.preco_hora }}')">
-                        Reservar Horário
-                    </button>
-                {% else %}
-                    <button class="btn-add" style="background-color: #cbd5e1; cursor: not-allowed;" disabled>
-                        Indisponível
-                    </button>
-                {% endif %}
+
+            <div class="feature-card">
+                <i class="fa-solid fa-store"></i>
+                <h3>Loja Oficial</h3>
+                <p>Esqueceu o meião ou a bolinha? Compre diretamente no nosso catálogo com carrinho integrado.</p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fa-solid fa-medal"></i>
+                <h3>Estrutura de Elite</h3>
+                <p>Quadras com medidas oficiais, iluminação profissional de LED e vestiários completos à sua disposição.</p>
             </div>
         </div>
-        {% empty %}
-        <div class="empty-cart">
-            <p>Nenhuma quadra disponível para reserva no momento.</p>
-        </div>
-        {% endfor %}
+    </section>
 
-    </main>
-
-    <div class="cart-sidebar" id="sidebar-agendamento">
-        <div class="cart-header">
-            <h3>Minhas Reservas</h3>
-            <i class="fa-solid fa-xmark close-btn" onclick="toggleSidebar()"></i>
-        </div>
-        
-        <div class="cart-items" id="itens-agendados">
-            <p class="empty-cart">Nenhuma quadra selecionada.</p>
-        </div>
-
-        <div class="cart-footer">
-            <div class="total-container">
-                <span>Total:</span>
-                <span id="total-reserva">R$ 0,00</span>
-            </div>
-            <button class="btn-checkout">Confirmar Reservas</button>
-        </div>
-    </div>
-
-    <script>
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar-agendamento');
-            sidebar.classList.toggle('active');
-        }
-        
-        // Função provisória só para testar o clique
-        function adicionarAoAgendamento(nome, preco) {
-            alert('Você selecionou a ' + nome + ' por R$ ' + preco);
-        }
-    </script>
 </body>
 </html>
