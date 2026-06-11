@@ -1,10 +1,84 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playce | Gerenciamento de Quadras</title>
+    <link rel="stylesheet" href="{% static 'css/globals.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
 <body>
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-bag-shopping"></i> Tech<span>Store</span>
+        </div>
+        <div class="cart-icon" onclick="toggleCart()">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span id="cart-count">0</span>
+        </div>
+    </header>
+    <section class="banner">
+        <h2>Produtos em Destaque</h2>
+        <p>Confira as melhores ofertas da semana com frete grátis.</p>
+    </section>
+    <main class="catalog-container">
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500" alt="Fone de Ouvido Bluetooth">
+            </div>
+            <div class="product-info">
+                <span class="category">Eletrônicos</span>
+                <h3>Fone de Ouvid
+                </h3>
+                <p class="price">R$ 1299,90</p>
+                <button class="btn-add" onclick="addToCart('Fone de Ouvido Premium', 299.90)">
+                    Adicionar ao Carrinho
+                </button>
+            </div>
+        </div>
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500" alt="Relógio Inteligente">
+            </div>
+            <div class="product-info">
+                <span class="category">Acessórios</span>
+                <h3>Smartwatch Series X</h3>
+                <p class="price">R$ 449,00</p>
+                <button class="btn-add" onclick="addToCart('Smartwatch Series X', 449.00)">
+                    Adicionar ao Carrinho
+                </button>
+            </div>
+        </div>
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500" alt="Tênis Esportivo">
+            </div>
+            <div class="product-info">
+                <span class="category">Calçados</span>
+                <h3>Tênis Performance Sport</h3>
+                <p class="price">R$ 189,90</p>
+                <button class="btn-add" onclick="addToCart('Tênis Performance Sport', 189.90)">
+                    Adicionar ao Carrinho
+                </button>
+            </div>
+        </div>
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=500" alt="Perfume">
+            </div>
+            <div class="product-info">
+                <span class="category">Beleza</span>
+                <h3>Perfume Eau de Parfum</h3>
+                <p class="price">R$ 31150,00</p>
+                <button class="btn-add" onclick="addToCart('Perfume Eau de Parfum', 350.00)">
+                    Adicionar ao Carrinho
+                </button>
+            </div>
+        </div>
 
+    </main>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
