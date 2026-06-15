@@ -1,0 +1,243 @@
+/* CONTAINER DE MÉTRICAS */
+.metrics-container {
+    max-width: 1200px;
+    margin: 2rem auto 0 auto;
+    padding: 0 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.metric-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    border: 1px solid #e2e8f0;
+}
+
+.metric-icon {
+    font-size: 2rem;
+    color: #1e293b;
+    background: #f1f5f9;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.metric-info h3 {
+    font-size: 0.9rem;
+    color: #64748b;
+    text-transform: uppercase;
+    margin-bottom: 0.2rem;
+}
+
+.metric-info p {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #1e293b;
+}
+
+/* CONTAINER PRINCIPAL DO PAINEL */
+.admin-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+
+/* SISTEMA DE ABAS */
+.tab-menu {
+    display: flex;
+    gap: 1rem;
+    border-bottom: 2px solid #e2e8f0;
+    margin-bottom: 1.5rem;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+}
+
+.tab-btn:hover {
+    color: #1e293b;
+}
+
+.tab-btn.active {
+    color: #10b981;
+    border-bottom-color: #10b981;
+}
+
+.tab-content {
+    display: none;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+    border: 1px solid #e2e8f0;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* HEADER DO CONTEÚDO */
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.content-header h2 {
+    font-size: 1.4rem;
+    color: #1e293b;
+}
+
+.btn-primary {
+    background-color: #10b981;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: #059669;
+}
+
+/* TABELA ADMINISTRATIVA */
+.table-responsive {
+    overflow-x: auto;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.admin-table th, .admin-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.admin-table th {
+    background-color: #f8fafc;
+    color: #64748b;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.table-item-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.item-title {
+    color: #1e293b;
+    font-size: 1rem;
+}
+
+.item-subtitle {
+    font-size: 0.85rem;
+    color: #94a3b8;
+}
+
+/* BADGES E STATUS INDICATORS */
+.badge {
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.badge-sport {
+    background-color: #e2e8f0;
+    color: #334155;
+}
+
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.status-indicator::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.status-online { color: #10b981; }
+.status-online::before { background-color: #10b981; }
+
+.status-warning { color: #f59e0b; }
+.status-warning::before { background-color: #f59e0b; }
+
+.status-offline { color: #ef4444; }
+.status-offline::before { background-color: #ef4444; }
+
+.stock-count {
+    font-weight: bold;
+    color: #1e293b;
+}
+
+.stock-count.alert {
+    color: #ef4444;
+    background: #fee2e2;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+}
+
+/* BOTÕES DE AÇÃO */
+.actions-cell {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-action {
+    background: #f1f5f9;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #475569;
+    transition: all 0.2s;
+}
+
+.btn-action:hover {
+    background: #1e293b;
+    color: white;
+}
+
+.btn-action.delete:hover {
+    background: #ef4444;
+    color: white;
+}

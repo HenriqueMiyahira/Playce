@@ -1,10 +1,166 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playce | Painel de Gerenciamento</title>
+    <link rel="stylesheet" href="{% static 'css/globals.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/gerenciamento.css' %}">
 </head>
 <body>
 
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-ranking-star"></i> Play<span>ce</span> Admin
+        </div>
+        <div class="user-profile">
+            <span style="margin-right: 10px; color: #cbd5e1;">Olá, Administrador</span>
+            <i class="fa-solid fa-circle-user" style="font-size: 1.5rem; color: #34d399;"></i>
+        </div>
+    </header>
+
+    <section class="metrics-container">
+        <div class="metric-card">
+            <div class="metric-icon"><i class="fa-solid fa-table-tennis-tennis"></i></div>
+            <div class="metric-info">
+                <h3>Total de Quadras</h3>
+                <p>{{ lista_de_quadras.count }} Cadastradas</p>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon" style="color: #10b981;"><i class="fa-solid fa-calendar-check"></i></div>
+            <div class="metric-info">
+                <h3>Reservas Hoje</h3>
+                <p>14 Agendamentos</p>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon" style="color: #f59e0b;"><i class="fa-solid fa-boxes-stacked"></i></div>
+            <div class="metric-info">
+                <h3>Alerta de Estoque</h3>
+                <p>2 Itens Baixos</p>
+            </div>
+        </div>
+    </section>
+
+    <main class="admin-container">
+        <div class="tab-menu">
+            <button class="tab-btn active" onclick="switchTab(event, 'quadras')">
+                <i class="fa-solid fa-map-pin"></i> Gerenciar Quadras
+            </button>
+            <button class="tab-btn" onclick="switchTab(event, 'estoque')">
+                <i class="fa-solid fa-store"></i> Estoque de Artigos
+            </button>
+        </div>
+
+        <div id="quadras" class="tab-content active">
+            <div class="content-header">
+                <h2>Suas Quadras Cadastradas</h2>
+                <button class="btn-primary"><i class="fa-solid fa-plus"></i> Nova Quadra</button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Quadra</th>
+                            <th>Tipo / Esporte</th>
+                            <th>Preço/Hora</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for quadra in lista_de_quadras %}
+                        <tr>
+                            <td>
+                                <div class="table-item-info">
+                                    <strong class="item-title">{{ quadra.nome }}</strong>
+                                </div>
+                            </td>
+                            <td><span class="badge badge-sport">{{ quadra.get_tipo_display }}</span></td>
+                            <td><strong>R$ {{ quadra.preco_hora }}</strong></td>
+                            <td>
+                                {% if quadra.disponivel %}
+                                    <span class="status-indicator status-online">Disponível</span>
+                                {% else %}
+                                    <span class="status-indicator status-offline">Manutenção</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="btn-action edit" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                                    <button class="btn-action delete" title="Pausar"><i class="fa-solid fa-ban"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" style="text-align: center; padding: 2rem;">
+                                Nenhuma quadra cadastrada no banco de dados ainda.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="estoque" class="tab-content">
+            <div class="content-header">
+                <h2>Controle de Materiais para Aluguel/Venda</h2>
+                <button class="btn-primary"><i class="fa-solid fa-plus"></i> Adicionar Item</button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Categoria</th>
+                            <th>Em Estoque</th>
+                            <th>Preço Aluguel (un)</th>
+                            <th>Condição</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for artigo in lista_de_artigos %}
+                        <tr>
+                            <td><strong>{{ artigo.nome }}</strong></td>
+                            <td>Equipamento</td>
+                            <td><span class="stock-count">{{ artigo.total_em_estoque }}</span></td>
+                            <td>{{ artigo.preco }}</td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="btn-action edit"><i class="fa-solid fa-pen"></i></button>
+                                    <button class="btn-action delete"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function switchTab(event, tabName) {
+            // Esconde todas as abas
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            // Remove a classe active de todos os botões
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            // Mostra a aba atual e adiciona a classe active no botão clicado
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
 </body>
 </html>
