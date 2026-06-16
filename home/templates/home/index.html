@@ -19,10 +19,10 @@
         </div>
         
         <nav class="nav-menu">
-            <a href="#" class="nav-link">Home</a>
+            <a href="{% url 'home_index' %}" class="nav-link">Home</a>
             <a href="#" class="nav-link">Quadras</a>
-            <a href="#" class="nav-link">Gerenciamento</a>
-            <a href="#" class="nav-link">Lojas</a>
+            <a href="{% url 'gerenciamento' %}" class="nav-link">Gerenciamento</a>
+            <a href="{% url 'lojas' %}" class="nav-link">Lojas</a>
         </nav>
 
         <div class="nav-auth">

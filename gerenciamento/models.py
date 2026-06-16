@@ -10,7 +10,12 @@ class Artigo(models.Model):
     nome = models.CharField(max_length=200, verbose_name="Nome do Artigo")
     categoria = models.CharField(max_length=30, choices=CATEGORIA_CHOICES, default='equipamento')
     preco = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Preço (un)")
-
+    codigo_base = models.CharField(
+        max_length=6,
+        unique=True,
+        default='AAA000',
+        verbose_name='Código base (6 dígitos)',
+    )
     class Meta:
         verbose_name = "Artigo"
         verbose_name_plural = "Artigos"
@@ -32,14 +37,12 @@ class ItemUnitario(models.Model):
     ]
 
     artigo = models.ForeignKey(Artigo, on_delete=models.CASCADE, related_name='unidades')
-
     codigo = models.CharField(
         max_length=50,
         unique=True,
         blank=True,
         verbose_name="Código/Etiqueta"
     )
-
     condicao = models.CharField(max_length=30, choices=CONDICAO_CHOICES, default='excelente')
     disponivel = models.BooleanField(default=True, verbose_name="Pronto para Uso?")
 
@@ -50,5 +53,14 @@ class ItemUnitario(models.Model):
 
     def __str__(self):
         return f"{self.artigo.nome} ({self.codigo})"
+
+    def save(self, *args, **kwargs):
+        if not self.codigo:
+            base = self.artigo.codigo_base.upper()
+            total_itens = self.artigo.unidades.count()
+            numero_codigo = total_itens + 1
+            self.codigo = f"{base}-{numero_codigo:02d}"
+
+        super().save(*args, **kwargs)
 
 # Create your models here.
