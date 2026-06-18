@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playce | Quadras</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="{% static 'css/globals.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/quadras.css' %}">
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-ranking-star"></i> Play<span>ce</span>
+        </div>
+
+        <nav class="nav-menu">
+            <a href="{% url 'home_index' %}" class="nav-link">Home</a>
+            <a href="{% url 'quadras' %}" class="nav-link">Quadras</a>
+            <a href="{% url 'gerenciamento' %}" class="nav-link">Gerenciamento</a>
+            <a href="{% url 'lojas' %}" class="nav-link">Lojas</a>
+        </nav>
+
+        <div class="nav-auth">
+            <a href="{% url 'minhas_reservas' %}" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Minhas Reservas</a>
+            <a href="#" class="btn-login"><i class="fa-regular fa-user"></i> Login / Cadastro</a>
+        </div>
+    </header>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="page-header">
+        <h1>Partidas abertas para jogar</h1>
+        <p>Encontre uma partida pública com vagas e entre para jogar.</p>
+    </div>
+
+    <div class="partidas-grid">
+        {% for partida in partidas_abertas %}
+            <div class="partida-card">
+                <div class="quadra-card-header">
+                    <h3>{{ partida.quadra.nome }}</h3>
+                    <span class="badge-tipo">{{ partida.quadra.get_tipo_display }}</span>
+                </div>
+                <p class="partida-info">
+                    <i class="fa-regular fa-calendar"></i> {{ partida.data|date:"d/m/Y" }}
+                    &nbsp;·&nbsp;
+                    <i class="fa-regular fa-clock"></i> {{ partida.hora_inicio|time:"H:i" }} - {{ partida.hora_fim|time:"H:i" }}
+                </p>
+
+                <div class="vagas-barra">
+                    <div class="vagas-barra-preenchida" style="width: {% widthratio partida.vagas_ocupadas partida.vagas_totais 100 %}%;"></div>
+                </div>
+                <p class="vagas-texto">{{ partida.vagas_ocupadas }}/{{ partida.vagas_totais }} confirmados</p>
+
+                <form method="POST" action="{% url 'entrar_partida' partida.id %}" class="form-entrar">
+                    {% csrf_token %}
+                    <input type="text" name="nome" value="{{ meu_nome }}" placeholder="Seu nome" required>
+                    <button type="submit" class="btn-cta">
+                        Entrar pra jogar
+                    </button>
+                </form>
+            </div>
+        {% empty %}
+            <div class="quadras-vazio">
+                <i class="fa-solid fa-person-running" style="font-size: 2rem; margin-bottom: 0.8rem; display:block;"></i>
+                Nenhuma partida pública aberta no momento. Que tal reservar uma quadra e abrir uma?
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="page-header">
+        <h1>Quadras disponíveis</h1>
+        <p>Escolha uma quadra, defina o horário e confirme sua reserva.</p>
+    </div>
+
+    <div class="filtros">
+        <a href="{% url 'quadras' %}" class="filtro-link {% if not filtro_tipo %}active{% endif %}">Todas</a>
+        {% for valor, rotulo in tipos %}
+            <a href="?tipo={{ valor }}" class="filtro-link {% if filtro_tipo == valor %}active{% endif %}">{{ rotulo }}</a>
+        {% endfor %}
+    </div>
+
+    <div class="quadras-grid">
+        {% for quadra in lista_de_quadras %}
+            <div class="quadra-card">
+                <div class="quadra-card-header">
+                    <h3>{{ quadra.nome }}</h3>
+                    <span class="badge-tipo">{{ quadra.get_tipo_display }}</span>
+                </div>
+                <div class="quadra-preco">
+                    R$ {{ quadra.preco_hora }} <span>/ hora</span>
+                </div>
+                <a href="{% url 'reservar_quadra' quadra.id %}" class="btn-cta" style="text-align:center;">
+                   Reservar
+                </a>
+            </div>
+        {% empty %}
+            <div class="quadras-vazio">
+                <i class="fa-solid fa-circle-info" style="font-size: 2rem; margin-bottom: 0.8rem; display:block;"></i>
+                Nenhuma quadra disponível com esse filtro no momento.
+            </div>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
