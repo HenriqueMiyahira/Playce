@@ -11,6 +11,7 @@ class Quadra(models.Model):
         ('FUT', 'Futebol'),
         ('VOL', 'Vôlei'),
         ('BAS', 'Basquete'),
+        ('TEN', 'Tênis'),
     ]
     
     nome = models.CharField(max_length=100)

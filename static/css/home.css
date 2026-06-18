@@ -74,17 +74,22 @@ header {
     color: #1e293b;
 }
 
-/* ==========================================================================
-   BANNER PRINCIPAL (HERO SECTION)
-   ========================================================================== */
+
+/* BANNER PRINCIPAL */
+
 .banner {
-    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    /* O gradiente escuro fica POR CIMA (0.85 de opacidade) e a imagem fica POR BAIXO */
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(51, 65, 85, 0.85) 100%),
+                url('https://cdni.iconscout.com/illustration/premium/thumb/athletes-of-summer-sports-illustration-svg-download-png-8743533.png') no-repeat center center;
+
+    background-size: contain;
     color: white;
     text-align: center;
-    padding: 5rem 1rem 4rem 1rem; /* Ajustado o espaçamento interno */
+    padding: 5rem 1rem 4rem 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 .banner h2 {
@@ -100,29 +105,43 @@ header {
     margin-bottom: 2rem; /* Espaço controlado antes da imagem */
 }
 
-/* CONTAINER DA IMAGEM */
-.banner_img {
-    max-width: 700px;  /* Limita a largura máxima para não cobrir a tela toda */
-    width: 90%;        /* Garante que fique responsivo em telas menores/celular */
-    margin: 0 auto;
-    border-radius: 12px; /* Bordas arredondadas elegantes */
-    overflow: hidden;   /* Força a imagem a respeitar o arredondamento da borda */
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); /* Sombra para dar profundidade */
-    border: 3px solid rgba(255, 255, 255, 0.1); /* Micro borda sutil */
+/* LOGO CENTRAL DO BANNER (Substituiu a banner_img) */
+.banner_logo {
+    font-size: 4rem; /* Deixa a logo bem grande e imponente */
+    font-weight: bold;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); /* Sombra para dar profundidade sobre a imagem de fundo */
+    margin-top: 1rem;
+    animation: fadeIn 0.8s ease-out; /* Efeito suave de surgimento */
 }
 
-/* COMPORTAMENTO DA IMAGEM DE FATO */
-.banner_img img {
-    width: 100%;       /* Ocupa 100% do container de 700px */
-    height: 350px;     /* Define uma altura fixa proporcional */
-    object-fit: cover; /* Recorta e adapta a foto perfeitamente sem achatar ou esticar */
-    display: block;    /* Remove espaços em branco fantasmas embaixo da imagem */
+.banner_logo span {
+    color: #34d399; /* Mantém o 'ce' em Verde Esmeralda igual à navbar */
+}
+
+.banner_logo i {
+    color: #34d399; /* Deixa o ícone verde também para destacar */
+}
+
+/* Animação simples para a logo aparecer com estilo */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Botão de Chamada para Ação (CTA) */
 .btn-cta {
     display: inline-block;
-    background-color: #10b981; /* Verde esmeralda */
+    background-color: #10b981;
     color: #ffffff;
     padding: 0.9rem 2.2rem;
     border-radius: 6px;
@@ -143,9 +162,7 @@ header {
 }
 
 
-/* ==========================================================================
-   SEÇÃO DE DIFERENCIAIS (FEATURES)
-   ========================================================================== */
+/* SEÇÃO DE DIFERENCIAIS (FEATURES) */
 .features-container {
     max-width: 1200px;
     margin: 5rem auto;
@@ -202,7 +219,7 @@ header {
 }
 
 .feature-card:hover i {
-    color: #10b981; /* O ícone ganha cor ao passar o mouse no card */
+    color: #10b981;
 }
 
 .feature-card h3 {
@@ -216,4 +233,28 @@ header {
     color: #64748b;
     font-size: 0.95rem;
     line-height: 1.6;
+}
+
+/* Estilo específico para o botão menor de dentro dos cards */
+.btn-card {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    margin-top: 0;
+}
+
+/* Estilo para a mensagem quando não houver esportes cadastrados */
+.empty-warning {
+    grid-column: 1 / -1;
+    color: #64748b;
+    padding: 2rem;
+    text-align: center;
+}
+
+.empty-warning i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #cbd5e1;
+    background: none !important;
+    width: auto !important;
+    height: auto !important;
 }
