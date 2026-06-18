@@ -1,0 +1,11 @@
+# Caches do Python e Django
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+
+# Pastas de configuração do PyCharm / VSCode
+.idea/
+.vscode/
