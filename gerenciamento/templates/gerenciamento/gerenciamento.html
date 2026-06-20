@@ -11,22 +11,8 @@
 </head>
 <body>
 
-    <header>
-        <div class="logo">
-            <i class="fa-solid fa-ranking-star"></i> Play<span>ce</span>
-        </div>
-
-        <nav class="nav-menu">
-            <a href="{% url 'home_index' %}" class="nav-link">Home</a>
-            <a href="{% url 'quadras' %}" class="nav-link">Quadras</a>
-            <a href="{% url 'gerenciamento' %}" class="nav-link">Gerenciamento</a>
-            <a href="{% url 'lojas' %}" class="nav-link">Lojas</a>
-        </nav>
-
-        <div class="nav-auth">
-            <a href="#" class="btn-login"><i class="fa-regular fa-user"></i> Login / Cadastro</a>
-        </div>
-    </header>
+    {% include 'partials/navbar.html' %}
+    {% include 'partials/messages.html' %}
 
     <section class="metrics-container">
         <div class="metric-card">

@@ -14,29 +14,8 @@
 </head>
 <body>
 
-    <header>
-        <div class="logo">
-            <i class="fa-solid fa-ranking-star"></i> Play<span>ce</span>
-        </div>
-
-        <nav class="nav-menu">
-            <a href="{% url 'home_index' %}" class="nav-link">Home</a>
-            <a href="{% url 'quadras' %}" class="nav-link">Quadras</a>
-            <a href="{% url 'gerenciamento' %}" class="nav-link">Gerenciamento</a>
-            <a href="{% url 'lojas' %}" class="nav-link">Lojas</a>
-        </nav>
-
-        <div class="nav-auth">
-            <a href="{% url 'minhas_reservas' %}" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Minhas Reservas</a>
-            <a href="#" class="btn-login"><i class="fa-regular fa-user"></i> Login / Cadastro</a>
-        </div>
-    </header>
-
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-        {% endfor %}
-    {% endif %}
+    {% include 'partials/navbar.html' %}
+    {% include 'partials/messages.html' %}
 
     <div class="page-header">
         <h1>Partidas abertas para jogar</h1>
@@ -63,7 +42,11 @@
 
                 <form method="POST" action="{% url 'entrar_partida' partida.id %}" class="form-entrar">
                     {% csrf_token %}
-                    <input type="text" name="nome" value="{{ meu_nome }}" placeholder="Seu nome" required>
+                    {% if user.is_authenticated %}
+                        <input type="hidden" name="nome" value="{{ meu_nome }}">
+                    {% else %}
+                        <input type="text" name="nome" value="{{ meu_nome }}" placeholder="Seu nome" required>
+                    {% endif %}
                     <button type="submit" class="btn-cta">
                         Entrar pra jogar
                     </button>

@@ -7,73 +7,93 @@
     <title>Playce | Minhas Reservas</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <link rel="stylesheet" href="{% static 'css/globals.css' %}">
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
     <link rel="stylesheet" href="{% static 'css/quadras.css' %}">
 </head>
 <body>
 
-    <header>
-        <div class="logo">
-            <i class="fa-solid fa-ranking-star"></i> Play<span>ce</span>
-        </div>
+    {% include 'partials/navbar.html' %}
+    {% include 'partials/messages.html' %}
 
-        <nav class="nav-menu">
-            <a href="{% url 'home_index' %}" class="nav-link">Home</a>
-            <a href="{% url 'quadras' %}" class="nav-link">Quadras</a>
-            <a href="{% url 'gerenciamento' %}" class="nav-link">Gerenciamento</a>
-            <a href="{% url 'lojas' %}" class="nav-link">Lojas</a>
-        </nav>
-
-        <div class="nav-auth">
-            <a href="#" class="btn-login"><i class="fa-regular fa-user"></i> Login / Cadastro</a>
-        </div>
-    </header>
-
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-        {% endfor %}
-    {% endif %}
-
-    <div class="page-header">
-        <h1>Minhas Reservas</h1>
-        <p>
-            Como o login ainda não está disponível, digite o telefone/contato usado na reserva para encontrá-la.
-        </p>
-    </div>
-
-    <form method="GET" class="busca-form">
-        <input type="text" name="contato" value="{{ contato }}" placeholder="Digite seu telefone/contato" required>
-        <button type="submit"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
-    </form>
-
-    <div class="reservas-lista">
-        {% for reserva in reservas %}
-            <div class="reserva-item">
-                <div class="reserva-item-info">
-                    <h4>{{ reserva.quadra.nome }}</h4>
-                    <p>{{ reserva.data|date:"d/m/Y" }} · {{ reserva.hora_inicio|time:"H:i" }} às {{ reserva.hora_fim|time:"H:i" }}</p>
-                </div>
-                <span class="status-tag status-{{ reserva.status }}">{{ reserva.get_status_display }}</span>
-                {% if reserva.status != 'CAN' %}
-                    <form method="POST" action="{% url 'cancelar_reserva' reserva.id %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn-cancelar">Cancelar</button>
-                    </form>
-                {% endif %}
+    <main class="dashboard-container">
+        <section class="dashboard-header">
+            <div>
+                <p class="dashboard-kicker">Area logada</p>
+                <h1>Bem-vindo ao seu painel, {{ nome_usuario }}</h1>
+                <p>Acompanhe seu historico de reservas e gerencie os horarios ativos.</p>
             </div>
-        {% empty %}
-            <div class="quadras-vazio">
-                {% if contato %}
-                    Nenhuma reserva encontrada para esse contato.
-                {% else %}
-                    Digite seu contato acima para ver suas reservas.
-                {% endif %}
+            <a href="{% url 'quadras' %}" class="btn-cta">Nova reserva</a>
+        </section>
+
+        <section class="dashboard-metrics" aria-label="Resumo das reservas">
+            <div class="dashboard-metric">
+                <span>{{ total_confirmadas }}</span>
+                <p>Confirmadas</p>
             </div>
-        {% endfor %}
-    </div>
+            <div class="dashboard-metric">
+                <span>{{ total_passadas }}</span>
+                <p>Passadas</p>
+            </div>
+            <div class="dashboard-metric">
+                <span>{{ total_canceladas }}</span>
+                <p>Canceladas</p>
+            </div>
+        </section>
+
+        <section class="reservas-panel">
+            <div class="reservas-panel-header">
+                <h2>Historico e status</h2>
+                <span>{{ reservas|length }} reserva(s)</span>
+            </div>
+
+            <div class="reservas-table-wrap">
+                <table class="reservas-table">
+                    <thead>
+                        <tr>
+                            <th>Quadra</th>
+                            <th>Data</th>
+                            <th>Horario</th>
+                            <th>Status</th>
+                            <th>Acoes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reserva in reservas %}
+                            <tr>
+                                <td>
+                                    <strong>{{ reserva.quadra.nome }}</strong>
+                                    <small>{{ reserva.quadra.get_tipo_display }}</small>
+                                </td>
+                                <td>{{ reserva.data|date:"d/m/Y" }}</td>
+                                <td>{{ reserva.hora_inicio|time:"H:i" }} as {{ reserva.hora_fim|time:"H:i" }}</td>
+                                <td>
+                                    <span class="status-tag status-{{ reserva.status }}">{{ reserva.get_status_display }}</span>
+                                </td>
+                                <td>
+                                    <div class="quick-actions">
+                                        <a href="{% url 'quadras' %}" class="btn-detalhes">Ver Detalhes</a>
+                                        {% if reserva.status != 'CAN' %}
+                                            <form method="POST" action="{% url 'cancelar_reserva' reserva.id %}">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn-cancelar">Cancelar</button>
+                                            </form>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="5" class="empty-cell">
+                                    Voce ainda nao possui reservas vinculadas ao seu login.
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
 
 </body>
 </html>

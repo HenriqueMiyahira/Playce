@@ -8,16 +8,10 @@
     <link rel="stylesheet" href="{% static 'css/globals.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
 <body>
-    <header>
-        <div class="logo">
-            <i class="fa-solid fa-bag-shopping"></i> Tech<span>Store</span>
-        </div>
-        <div class="cart-icon" onclick="toggleCart()">
-            <i class="fa-solid fa-cart-shopping"></i>
-            <span id="cart-count">0</span>
-        </div>
-    </header>
+    {% include 'partials/navbar.html' %}
+    {% include 'partials/messages.html' %}
     <section class="banner">
         <h2>Produtos em Destaque</h2>
         <p>Confira as melhores ofertas da semana com frete grátis.</p>

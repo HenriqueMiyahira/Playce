@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Playce</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body class="auth-body">
+
+    <main class="auth-container">
+        <a href="{% url 'home_index' %}" class="auth-brand">
+            <i class="fa-solid fa-ranking-star"></i> Play<span>ce</span>
+        </a>
+
+        {% if messages %}
+            <div class="auth-messages" aria-live="polite">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags|default:'info' }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <section class="auth-card" aria-labelledby="cadastro-title">
+            <div class="auth-heading">
+                <p>Crie seu acesso</p>
+                <h1 id="cadastro-title">Cadastrar</h1>
+            </div>
+
+            <form method="POST" class="auth-form" novalidate>
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+
+                {% for field in form %}
+                    <div class="form-field">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.help_text %}
+                            <span class="helptext">{{ field.help_text }}</span>
+                        {% endif %}
+                        {{ field.errors }}
+                    </div>
+                {% endfor %}
+
+                <button type="submit" class="btn-auth">Cadastrar</button>
+            </form>
+
+            <p class="auth-footer">
+                Ja possui uma conta?
+                <a href="{% url 'login' %}">Entrar</a>
+            </p>
+        </section>
+    </main>
+
+</body>
+</html>

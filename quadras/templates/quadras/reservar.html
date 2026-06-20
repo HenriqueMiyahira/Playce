@@ -14,29 +14,8 @@
 </head>
 <body>
 
-    <header>
-        <div class="logo">
-            <i class="fa-solid fa-ranking-star"></i> Play<span>ce</span>
-        </div>
-
-        <nav class="nav-menu">
-            <a href="{% url 'home_index' %}" class="nav-link">Home</a>
-            <a href="{% url 'quadras' %}" class="nav-link">Quadras</a>
-            <a href="{% url 'gerenciamento' %}" class="nav-link">Gerenciamento</a>
-            <a href="{% url 'lojas' %}" class="nav-link">Lojas</a>
-        </nav>
-
-        <div class="nav-auth">
-            <a href="{% url 'minhas_reservas' %}" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Minhas Reservas</a>
-            <a href="#" class="btn-login"><i class="fa-regular fa-user"></i> Login / Cadastro</a>
-        </div>
-    </header>
-
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-        {% endfor %}
-    {% endif %}
+    {% include 'partials/navbar.html' %}
+    {% include 'partials/messages.html' %}
 
     <div class="reserva-container">
         <a href="{% url 'quadras' %}" class="btn-voltar"><i class="fa-solid fa-arrow-left"></i> Voltar para quadras</a>
@@ -50,12 +29,12 @@
 
                 <div class="form-group">
                     <label for="nome_cliente">Nome do responsável</label>
-                    <input type="text" id="nome_cliente" name="nome_cliente" required placeholder="Seu nome completo">
+                    <input type="text" id="nome_cliente" name="nome_cliente" value="{{ nome_padrao }}" required placeholder="Seu nome completo">
                 </div>
 
                 <div class="form-group">
                     <label for="contato_cliente">Telefone / Contato</label>
-                    <input type="text" id="contato_cliente" name="contato_cliente" required placeholder="(00) 00000-0000">
+                    <input type="text" id="contato_cliente" name="contato_cliente" value="{{ contato_padrao }}" required placeholder="E-mail ou telefone">
                 </div>
 
                 <div class="form-group">
