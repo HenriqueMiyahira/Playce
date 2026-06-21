@@ -1,0 +1,140 @@
+/* lojas/static/css/lojas.css */
+
+/* Filtros de Categoria em formato de botões */
+.category-filter-section {
+    text-align: center;
+    padding: 20px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    margin-bottom: 1rem;
+}
+
+.category-badge-container {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.category-badge {
+    background-color: #1e293b;
+    color: #ffffff;
+    padding: 8px 18px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.category-badge:hover {
+    background-color: #ff6b6b;
+    transform: translateY(-1px);
+}
+
+/* Container que força os cards das lojas a ficarem lado a lado */
+.stores-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* Card individual da Loja */
+.store-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid #e2e8f0;
+}
+
+.store-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Topo colorido do card da loja */
+.store-header-banner {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    height: 75px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Espaço circular da Logo / Ícone */
+.store-logo-avatar {
+    width: 65px;
+    height: 65px;
+    background: #ffffff;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border: 3px solid #ffffff;
+}
+
+.store-logo-avatar i {
+    font-size: 1.8rem;
+}
+
+/* Informações internas da loja */
+.store-body {
+    padding: 40px 1.25rem 1.5rem 1.25rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.partner-tag {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #94a3b8;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.store-body h3 {
+    font-size: 1.25rem;
+    color: #1e293b;
+    margin-bottom: 10px;
+}
+
+.store-description {
+    font-size: 0.9rem;
+    color: #64748b;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+/* Botão de Visitar a Loja combinando com o botão do seu CSS global */
+.btn-visit {
+    background-color: #ff6b6b;
+    color: white;
+    padding: 0.7rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.95rem;
+    transition: background-color 0.2s;
+    display: block;
+}
+
+.btn-visit:hover {
+    background-color: #ee5253;
+}

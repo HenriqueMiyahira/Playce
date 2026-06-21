@@ -1,0 +1,66 @@
+from django.db import models
+
+class Artigo(models.Model):
+    CATEGORIA_CHOICES = [
+        ('equipamento', 'Equipamento'),
+        ('vestuario', 'Vestuário'),
+        ('alimento', 'Alimento'),
+    ]
+
+    nome = models.CharField(max_length=200, verbose_name="Nome do Artigo")
+    categoria = models.CharField(max_length=30, choices=CATEGORIA_CHOICES, default='equipamento')
+    preco = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Preço (un)")
+    codigo_base = models.CharField(
+        max_length=6,
+        unique=True,
+        default='AAA000',
+        verbose_name='Código base (6 dígitos)',
+    )
+    class Meta:
+        verbose_name = "Artigo"
+        verbose_name_plural = "Artigos"
+        ordering = ['nome']
+
+    def __str__(self):
+        return self.nome
+
+    def total_em_estoque(self):
+        return self.unidades.count()
+
+
+class ItemUnitario(models.Model):
+    CONDICAO_CHOICES = [
+        ('excelente', 'Excelente'),
+        ('desgastado', 'Desgastado'),
+        ('manutencao', 'Em Manutenção'),
+        ('pronto_para_uso', 'Pronto p/ Uso'),
+    ]
+
+    artigo = models.ForeignKey(Artigo, on_delete=models.CASCADE, related_name='unidades')
+    codigo = models.CharField(
+        max_length=50,
+        unique=True,
+        blank=True,
+        verbose_name="Código/Etiqueta"
+    )
+    condicao = models.CharField(max_length=30, choices=CONDICAO_CHOICES, default='excelente')
+    disponivel = models.BooleanField(default=True, verbose_name="Pronto para Uso?")
+
+    class Meta:
+        verbose_name = "Item Unitário"
+        verbose_name_plural = "Itens Unitários"
+        ordering = ['codigo']
+
+    def __str__(self):
+        return f"{self.artigo.nome} ({self.codigo})"
+
+    def save(self, *args, **kwargs):
+        if not self.codigo:
+            base = self.artigo.codigo_base.upper()
+            total_itens = self.artigo.unidades.count()
+            numero_codigo = total_itens + 1
+            self.codigo = f"{base}-{numero_codigo:02d}"
+
+        super().save(*args, **kwargs)
+
+# Create your models here.

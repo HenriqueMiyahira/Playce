@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playce | Sua Arena de Esportes</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="{% static 'css/globals.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+
+    {% include 'partials/navbar.html' %}
+    {% include 'partials/messages.html' %}
+
+    <section class="banner">
+        <h2>A Maior Rede de Complexos Esportivos da Região</h2>
+        <br>
+        <div class="banner_logo">
+            <i class="fa-solid fa-ranking-star"></i> Play<span>ce</span>
+        </div>
+    </section>
+
+    <section class="features-container">
+        <h2 class="features-title">Modalidades Disponíveis na Arena</h2>
+        
+        <div class="features-grid">
+            {% for esporte in esportes %}
+                <div class="feature-card">
+                    {% if esporte.codigo == 'FUT' %}
+                        <i class="fa-solid fa-soccer-ball"></i>
+                    {% elif esporte.codigo == 'VOL' %}
+                        <i class="fa-solid fa-volleyball"></i>
+                    {% elif esporte.codigo == 'BAS' %}
+                        <i class="fa-solid fa-basketball"></i>
+                    {% elif esporte.codigo == 'TEN' %}
+                        <i class="fa-solid fa-tenis"></i>
+                    {% else %}
+                        <i class="fa-solid fa-medal"></i>
+                    {% endif %}
+
+                    <h3>{{esporte.nome}}</h3>
+                    <p>Confira as quadras de {{ esporte.nome }} disponíveis, escolha seu horário e jogue com a galera.</p>
+                    <br>
+                    <a href="{% url 'gerenciamento' %}" class="btn-cta btn-card">Ver Quadras</a>
+                </div>
+            {% empty %}
+                <div class="empty-warning">
+                    <i class="fa-solid fa-calendar-xmark"></i>
+                    <p>Nenhuma modalidade disponível</p>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+</body>
+</html>
+
+

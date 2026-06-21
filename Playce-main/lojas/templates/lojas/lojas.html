@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playce | Nossas Lojas</title>
+    <link rel="stylesheet" href="{% static 'css/globals.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/lojas.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    {% include 'partials/navbar.html' %}
+    {% include 'partials/messages.html' %}
+
+    <section class="banner">
+        <h2>Nossas Lojas e Categorias</h2>
+        <p>Escolha uma categoria ou visite uma de nossas lojas parceiras.</p>
+    </section>
+
+    <section class="category-filter-section">
+        <h3 style="color: #1e293b; font-size: 1.1rem;">Filtrar por Categoria:</h3>
+        <div class="category-badge-container">
+            {% for categoria in categorias %}
+                <a href="{% url 'lojas:produtos_por_categoria' categoria.slug %}" class="category-badge">
+                    {{ categoria.nome }}
+                </a>
+            {% endfor %}
+        </div>
+    </section>
+
+    <main class="stores-grid">
+        {% for loja in lojas %}
+            <div class="store-card">
+                <div class="store-header-banner">
+                    <div class="store-logo-avatar">
+                        {% if "Zé" in loja.nome %}
+                            <i class="fa-solid fa-utensils" style="color: #e67e22;"></i>
+                        {% elif "Lanches" in loja.nome or "Speed" in loja.nome %}
+                            <i class="fa-solid fa-burger" style="color: #f1c40f;"></i>
+                        {% else %}
+                            <i class="fa-solid fa-dumbbell" style="color: #10b981;"></i>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="store-body">
+                    <span class="partner-tag">Parceiro Playce</span>
+                    <h3>{{ loja.nome }}</h3>
+                    <p class="store-description">{{ loja.descricao }}</p>
+                    <a href="#" class="btn-visit">Ver Produtos</a>
+                </div>
+            </div>
+        {% empty %}
+            <p class="empty-cart" style="width: 100%;">Nenhuma loja parceira cadastrada ainda.</p>
+        {% endfor %}
+    </main>
+</body>
+</html>

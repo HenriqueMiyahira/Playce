@@ -1,0 +1,260 @@
+/* CONFIGURAÇÕES BASE & RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f4f6f9;
+    color: #333;
+    overflow-x: hidden;
+}
+
+/* NAVBAR ALINHADA */
+header {
+    background-color: #1e293b;
+    color: #fff;
+    padding: 1.1rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.logo span {
+    color: #34d399; /* Verde Esmeralda */
+}
+
+/* Menu Central de Links */
+.nav-menu {
+    display: flex;
+    gap: 2.2rem;
+}
+
+.nav-link {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: color 0.2s;
+}
+
+.nav-link:hover {
+    color: #34d399;
+}
+
+/* Botão de Login à Direita */
+.btn-login {
+    background-color: transparent;
+    color: #fff;
+    border: 2px solid #34d399;
+    padding: 0.5rem 1.3rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-login:hover {
+    background-color: #34d399;
+    color: #1e293b;
+}
+
+
+/* BANNER PRINCIPAL */
+
+.banner {
+    /* O gradiente escuro fica POR CIMA (0.85 de opacidade) e a imagem fica POR BAIXO */
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(51, 65, 85, 0.85) 100%),
+                url('https://cdni.iconscout.com/illustration/premium/thumb/athletes-of-summer-sports-illustration-svg-download-png-8743533.png') no-repeat center center;
+
+    background-size: contain;
+    color: white;
+    text-align: center;
+    padding: 5rem 1rem 4rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.banner h2 {
+    font-size: 2.5rem;
+    margin-bottom: 0.8rem;
+    max-width: 800px;
+}
+
+.banner p {
+    color: #cbd5e1;
+    font-size: 1.2rem;
+    max-width: 650px;
+    margin-bottom: 2rem; /* Espaço controlado antes da imagem */
+}
+
+/* LOGO CENTRAL DO BANNER (Substituiu a banner_img) */
+.banner_logo {
+    font-size: 4rem; /* Deixa a logo bem grande e imponente */
+    font-weight: bold;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); /* Sombra para dar profundidade sobre a imagem de fundo */
+    margin-top: 1rem;
+    animation: fadeIn 0.8s ease-out; /* Efeito suave de surgimento */
+}
+
+.banner_logo span {
+    color: #34d399; /* Mantém o 'ce' em Verde Esmeralda igual à navbar */
+}
+
+.banner_logo i {
+    color: #34d399; /* Deixa o ícone verde também para destacar */
+}
+
+/* Animação simples para a logo aparecer com estilo */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Botão de Chamada para Ação (CTA) */
+.btn-cta {
+    display: inline-block;
+    background-color: #10b981;
+    color: #ffffff;
+    padding: 0.9rem 2.2rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.05rem;
+    transition: background-color 0.2s, transform 0.2s;
+    box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2);
+}
+
+.btn-cta:hover {
+    background-color: #059669;
+    transform: translateY(-2px);
+}
+
+.btn-cta:active {
+    transform: translateY(0);
+}
+
+
+/* SEÇÃO DE DIFERENCIAIS (FEATURES) */
+.features-container {
+    max-width: 1200px;
+    margin: 5rem auto;
+    padding: 0 2rem;
+    text-align: center;
+}
+
+.features-title {
+    color: #1e293b;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+/* Grid Inteligente (Responsivo automático) */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
+}
+
+/* Cards de Vantagens */
+.feature-card {
+    background-color: #ffffff;
+    padding: 3rem 2rem;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    border-top: 4px solid #34d399; /* Detalhe em verde na borda superior */
+    transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.feature-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Ícones dos Cards */
+.feature-card i {
+    font-size: 2.8rem;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+    background: #f1f5f9;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: color 0.2s;
+}
+
+.feature-card:hover i {
+    color: #10b981;
+}
+
+.feature-card h3 {
+    color: #1e293b;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.7rem;
+}
+
+.feature-card p {
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Estilo específico para o botão menor de dentro dos cards */
+.btn-card {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    margin-top: 0;
+}
+
+/* Estilo para a mensagem quando não houver esportes cadastrados */
+.empty-warning {
+    grid-column: 1 / -1;
+    color: #64748b;
+    padding: 2rem;
+    text-align: center;
+}
+
+.empty-warning i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #cbd5e1;
+    background: none !important;
+    width: auto !important;
+    height: auto !important;
+}
