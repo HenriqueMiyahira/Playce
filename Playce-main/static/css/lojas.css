@@ -1,6 +1,4 @@
-/* lojas/static/css/lojas.css */
 
-/* Filtros de Categoria em formato de botões */
 .category-filter-section {
     text-align: center;
     padding: 20px;
@@ -33,7 +31,6 @@
     transform: translateY(-1px);
 }
 
-/* Container que força os cards das lojas a ficarem lado a lado */
 .stores-grid {
     display: flex;
     flex-wrap: wrap;
@@ -44,7 +41,6 @@
     padding: 0 1rem;
 }
 
-/* Card individual da Loja */
 .store-card {
     background: #ffffff;
     border-radius: 12px;
@@ -62,7 +58,6 @@
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Topo colorido do card da loja */
 .store-header-banner {
     background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
     height: 75px;
@@ -72,7 +67,6 @@
     justify-content: center;
 }
 
-/* Espaço circular da Logo / Ícone */
 .store-logo-avatar {
     width: 65px;
     height: 65px;
@@ -91,7 +85,6 @@
     font-size: 1.8rem;
 }
 
-/* Informações internas da loja */
 .store-body {
     padding: 40px 1.25rem 1.5rem 1.25rem;
     text-align: center;
@@ -122,7 +115,6 @@
     flex-grow: 1;
 }
 
-/* Botão de Visitar a Loja combinando com o botão do seu CSS global */
 .btn-visit {
     background-color: #ff6b6b;
     color: white;
