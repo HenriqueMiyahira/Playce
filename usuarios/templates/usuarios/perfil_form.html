@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playce | Editar Perfil</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/globals.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+
+    {% include 'partials/navbar.html' %}
+    {% include 'partials/messages.html' %}
+
+    <main class="profile-container profile-form-container">
+        <section class="profile-card edit-profile-card" aria-labelledby="editar-perfil-title">
+            <div class="auth-heading">
+                <p>Dados cadastrais</p>
+                <h1 id="editar-perfil-title">Editar Perfil</h1>
+            </div>
+
+            <form method="POST" class="auth-form" novalidate>
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+
+                {% for field in form %}
+                    <div class="form-field">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {{ field.errors }}
+                    </div>
+                {% endfor %}
+
+                <div class="form-actions-row">
+                    <button type="submit" class="btn-auth">Salvar Alteracoes</button>
+                    <a href="{% url 'perfil' %}" class="btn-secondary-link">Cancelar</a>
+                </div>
+            </form>
+        </section>
+    </main>
+
+</body>
+</html>

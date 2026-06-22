@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playce | Meu Perfil</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/globals.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+
+    {% include 'partials/navbar.html' %}
+    {% include 'partials/messages.html' %}
+
+    <main class="profile-container">
+        <section class="profile-summary">
+            <div>
+                <p class="dashboard-kicker">Meu Perfil</p>
+                <h1>Ola, {{ nome_usuario }}</h1>
+                <p>Gerencie seus dados cadastrais e acompanhe suas reservas recentes.</p>
+            </div>
+            <a href="{% url 'editar_perfil' %}" class="btn-auth-link">Editar perfil</a>
+        </section>
+
+        <section class="profile-grid">
+            <article class="profile-card">
+                <h2>Dados da conta</h2>
+                <dl class="profile-data">
+                    <div>
+                        <dt>Nome completo</dt>
+                        <dd>{{ user.get_full_name|default:user.username }}</dd>
+                    </div>
+                    <div>
+                        <dt>Usuario</dt>
+                        <dd>{{ user.username }}</dd>
+                    </div>
+                    <div>
+                        <dt>E-mail</dt>
+                        <dd>{{ user.email|default:'Nao informado' }}</dd>
+                    </div>
+                </dl>
+            </article>
+
+            <article class="profile-card">
+                <div class="profile-card-header">
+                    <h2>Reservas recentes</h2>
+                    <a href="{% url 'minhas_reservas' %}">Ver todas</a>
+                </div>
+
+                <div class="mini-reservas">
+                    {% for reserva in reservas %}
+                        <div class="mini-reserva-item">
+                            <div>
+                                <strong>{{ reserva.quadra.nome }}</strong>
+                                <span>{{ reserva.data|date:"d/m/Y" }} as {{ reserva.hora_inicio|time:"H:i" }}</span>
+                            </div>
+                            <span class="status-tag status-{{ reserva.status }}">{{ reserva.get_status_display }}</span>
+                        </div>
+                    {% empty %}
+                        <p class="empty-profile">Voce ainda nao possui reservas vinculadas ao seu login.</p>
+                    {% endfor %}
+                </div>
+            </article>
+        </section>
+    </main>
+
+</body>
+</html>

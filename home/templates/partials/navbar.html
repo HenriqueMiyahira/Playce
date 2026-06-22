@@ -1,0 +1,46 @@
+{% load static %}
+<header class="site-header">
+    <a href="{% url 'home_index' %}" class="logo">
+        <i class="fa-solid fa-ranking-star"></i> Play<span>ce</span>
+    </a>
+
+    <nav class="nav-menu" aria-label="Navegacao principal">
+        <a href="{% url 'home_index' %}" class="nav-link">Home</a>
+        <a href="{% url 'quadras' %}" class="nav-link">Quadras</a>
+        <a href="{% url 'gerenciamento' %}" class="nav-link">Gerenciamento</a>
+        <a href="{% url 'lojas' %}" class="nav-link">Lojas</a>
+    </nav>
+
+    <div class="nav-auth">
+        {% if user.is_authenticated %}
+            <div class="profile-menu" data-profile-menu>
+                <button class="profile-trigger" type="button" aria-expanded="false" aria-haspopup="true" data-profile-trigger>
+                    <span>Ola, {{ user.get_full_name|default:user.username }}</span>
+                    <span class="profile-chevron" aria-hidden="true">▼</span>
+                </button>
+
+                <div class="profile-dropdown" role="menu" data-profile-dropdown>
+                    <a href="{% url 'perfil' %}" role="menuitem">Meu Perfil</a>
+                    <a href="{% url 'minhas_reservas' %}" role="menuitem">Minhas Reservas</a>
+                    <form method="POST" action="{% url 'logout' %}" data-logout-form>
+                        {% csrf_token %}
+                        <button type="submit" role="menuitem">Sair (Logout)</button>
+                    </form>
+                </div>
+            </div>
+        {% else %}
+            <a href="{% url 'login' %}" class="auth-link">Entrar</a>
+            <a href="{% url 'cadastro' %}" class="auth-link auth-link-primary">Cadastrar</a>
+        {% endif %}
+    </div>
+</header>
+
+<script>
+    window.playceAuthState = {
+        isLoggedIn: {% if user.is_authenticated %}true{% else %}false{% endif %},
+        userName: "{% if user.is_authenticated %}{{ user.get_full_name|default:user.username|escapejs }}{% endif %}"
+    };
+    window.isLoggedIn = window.playceAuthState.isLoggedIn;
+    window.userName = window.playceAuthState.userName;
+</script>
+<script src="{% static 'js/auth.js' %}" defer></script>

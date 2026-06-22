@@ -13,55 +13,50 @@
 </head>
 <body>
 
-    <header>
-        <div class="logo">
-            <i class="fa-solid fa-ranking-star"></i> Play<span>ce</span>
-        </div>
-        
-        <nav class="nav-menu">
-            <a href="#" class="nav-link">Home</a>
-            <a href="#" class="nav-link">Quadras</a>
-            <a href="#" class="nav-link">Gerenciamento</a>
-            <a href="#" class="nav-link">Lojas</a>
-        </nav>
-
-        <div class="nav-auth">
-            <a href="#" class="btn-login"><i class="fa-regular fa-user"></i> Login / Cadastro</a>
-        </div>
-    </header>
+    {% include 'partials/navbar.html' %}
+    {% include 'partials/messages.html' %}
 
     <section class="banner">
-        <h2>A maior rede de complexos esportivos da região</h2>
-        <p>Alugue quadras de futebol, vôlei e tênis em poucos cliques. Chame os amigos e jogue!</p>
+        <h2>A Maior Rede de Complexos Esportivos da Região</h2>
         <br>
-        <div class="banner_img">
-            <img src="https://i.ibb.co/MxJrbp9N/campo.jpg" alt="campo" border="0">
+        <div class="banner_logo">
+            <i class="fa-solid fa-ranking-star"></i> Play<span>ce</span>
         </div>
     </section>
 
     <section class="features-container">
-        <h2 class="features-title">Por que escolher o Playce?</h2>
+        <h2 class="features-title">Modalidades Disponíveis na Arena</h2>
         
         <div class="features-grid">
-            <div class="feature-card">
-                <i class="fa-solid fa-bolt"></i>
-                <h3>Reserva Online</h3>
-                <p>Agende e garanta seu horário de jogo pelo nosso sistema em minutos, sem complicação.</p>
-            </div>
+            {% for esporte in esportes %}
+                <div class="feature-card">
+                    {% if esporte.codigo == 'FUT' %}
+                        <i class="fa-solid fa-soccer-ball"></i>
+                    {% elif esporte.codigo == 'VOL' %}
+                        <i class="fa-solid fa-volleyball"></i>
+                    {% elif esporte.codigo == 'BAS' %}
+                        <i class="fa-solid fa-basketball"></i>
+                    {% elif esporte.codigo == 'TEN' %}
+                        <i class="fa-solid fa-tenis"></i>
+                    {% else %}
+                        <i class="fa-solid fa-medal"></i>
+                    {% endif %}
 
-            <div class="feature-card">
-                <i class="fa-solid fa-store"></i>
-                <h3>Loja Oficial</h3>
-                <p>Esqueceu o meião ou a bolinha? Compre diretamente no nosso catálogo com carrinho integrado.</p>
-            </div>
-
-            <div class="feature-card">
-                <i class="fa-solid fa-medal"></i>
-                <h3>Estrutura de Elite</h3>
-                <p>Quadras com medidas oficiais, iluminação profissional de LED e vestiários completos à sua disposição.</p>
-            </div>
+                    <h3>{{esporte.nome}}</h3>
+                    <p>Confira as quadras de {{ esporte.nome }} disponíveis, escolha seu horário e jogue com a galera.</p>
+                    <br>
+                    <a href="{% url 'gerenciamento' %}" class="btn-cta btn-card">Ver Quadras</a>
+                </div>
+            {% empty %}
+                <div class="empty-warning">
+                    <i class="fa-solid fa-calendar-xmark"></i>
+                    <p>Nenhuma modalidade disponível</p>
+                </div>
+            {% endfor %}
         </div>
     </section>
 
 </body>
 </html>
+
+
