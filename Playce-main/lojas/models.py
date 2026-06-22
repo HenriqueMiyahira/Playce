@@ -24,14 +24,12 @@ class Produto(models.Model):
 
     def __str__(self):
         return f"{self.nome} ({self.loja.nome})"
-# lojas/models.py
-# (Mantenha as classes Categoria, Loja e Produto que já estão aí)
 
 class ItemCarrinho(models.Model):
-    # Identifica o produto que foi adicionado
+
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     quantidade = models.PositiveIntegerField(default=1)
-    # Criado em para organizar se necessário
+
     criado_em = models.DateTimeField(auto_now_add=True)
 
     def subtotal(self):

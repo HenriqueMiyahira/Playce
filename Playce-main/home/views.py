@@ -1,9 +1,8 @@
-#aqui é onde fica a logica do usuário, o que ele quer e o que ele clica
+
 from django.shortcuts import render
 from .models import Usuarios
 from .models import Quadra
 
-# Create your views here.
 def home(request):
     tipos_no_banco = Quadra.objects.values_list('tipo', flat=True).distinct()
     categorias_map = dict(Quadra.TIPOS_ESPORTE)

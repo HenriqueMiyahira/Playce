@@ -3,11 +3,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Categoria, Produto, Loja
 
 def lista_lojas(request):
-    # Tela principal que mostra os parceiros/lojas
+  
     lojas = Loja.objects.all()
     categorias = Categoria.objects.all()
-    
-    # Mantém o contador do topo atualizado na sessão
+   
     carrinho_sessao = request.session.get('carrinho', {})
     total_itens = sum(carrinho_sessao.values())
     
@@ -20,8 +19,7 @@ def lista_lojas(request):
 def produtos_por_categoria(request, categoria_slug):
     categoria = get_object_or_404(Categoria, slug=categoria_slug)
     produtos = Produto.objects.filter(categoria=categoria)
-    
-    # --- LOGICA DO CARRINHO MINIMALISTA POR URL ---
+
     prod_id_add = request.GET.get('adicionar')
     if prod_id_add:
         carrinho = request.session.get('carrinho', {})
@@ -43,7 +41,6 @@ def produtos_por_categoria(request, categoria_slug):
         request.session['carrinho'] = {}
         return redirect(request.path)
 
-    # Buscar dados atualizados para renderizar a barra lateral
     carrinho_sessao = request.session.get('carrinho', {})
     itens_carrinho = []
     total_carrinho = 0
