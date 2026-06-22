@@ -4,75 +4,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Playce | Gerenciamento de Quadras</title>
+    <title>Playce | Nossas Lojas</title>
     <link rel="stylesheet" href="{% static 'css/globals.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/lojas.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     {% include 'partials/navbar.html' %}
     {% include 'partials/messages.html' %}
+
     <section class="banner">
-        <h2>Produtos em Destaque</h2>
-        <p>Confira as melhores ofertas da semana com frete grátis.</p>
+        <h2>Nossas Lojas e Categorias</h2>
+        <p>Escolha uma categoria ou visite uma de nossas lojas parceiras.</p>
     </section>
-    <main class="catalog-container">
-        <div class="product-card">
-            <div class="product-image">
-                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500" alt="Fone de Ouvido Bluetooth">
-            </div>
-            <div class="product-info">
-                <span class="category">Eletrônicos</span>
-                <h3>Fone de Ouvid
-                </h3>
-                <p class="price">R$ 1299,90</p>
-                <button class="btn-add" onclick="addToCart('Fone de Ouvido Premium', 299.90)">
-                    Adicionar ao Carrinho
-                </button>
-            </div>
+
+    <section class="category-filter-section">
+        <div class="category-badge-container">
+            {% for categoria in categorias %}
+                <a href="{% url 'lojas:produtos_por_categoria' categoria.slug %}" class="category-badge">
+                    {{ categoria.nome }}
+                </a>
+            {% endfor %}
         </div>
-        <div class="product-card">
-            <div class="product-image">
-                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500" alt="Relógio Inteligente">
+    </section>
+
+    <main class="stores-grid">
+        {% for loja in lojas %}
+            <div class="store-card">
+                <div class="store-header-banner">
+                    <div class="store-logo-avatar">
+                        {% if "Zé" in loja.nome %}
+                            <i class="fa-solid fa-utensils" style="color: #e67e22;"></i>
+                        {% elif "Lanches" in loja.nome or "Speed" in loja.nome %}
+                            <i class="fa-solid fa-burger" style="color: #f1c40f;"></i>
+                        {% else %}
+                            <i class="fa-solid fa-dumbbell" style="color: #10b981;"></i>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="store-body">
+                    <span class="partner-tag">Parceiro Playce</span>
+                    <h3>{{ loja.nome }}</h3>
+                    <p class="store-description">{{ loja.descricao }}</p>
+                    <a href="{% url 'lojas:detalhe_loja' loja.id %}" class="btn-visit">Ver Produtos da Loja</a>
+                </div>
             </div>
-            <div class="product-info">
-                <span class="category">Acessórios</span>
-                <h3>Smartwatch Series X</h3>
-                <p class="price">R$ 449,00</p>
-                <button class="btn-add" onclick="addToCart('Smartwatch Series X', 449.00)">
-                    Adicionar ao Carrinho
-                </button>
-            </div>
+        {% empty %}
+            <p class="empty-cart" style="width: 100%;">Nenhuma loja parceira cadastrada ainda.</p>
+        {% endfor %}
+    </main>
+
+    <div id="cart-sidebar" class="cart-sidebar {% if abrir_carrinho %}active{% endif %}" style="
+        position: fixed; top: 0; right: -350px; width: 350px; height: 100vh; 
+        background: white; box-shadow: -2px 0 10px rgba(0,0,0,0.2); z-index: 1000; 
+        transition: right 0.3s ease; display: flex; flex-direction: column;
+        {% if abrir_carrinho %}right: 0;{% endif %}">
+        
+        <div class="cart-header" style="background: #2c3e50; color: white; padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="margin: 0;"><i class="fa-solid fa-cart-shopping"></i> Seu Carrinho</h3>
+            <a href="?abrir=false" style="color: white; text-decoration: none; font-size: 1.5rem; font-weight: bold;">&times;</a>
         </div>
-        <div class="product-card">
-            <div class="product-image">
-                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500" alt="Tênis Esportivo">
-            </div>
-            <div class="product-info">
-                <span class="category">Calçados</span>
-                <h3>Tênis Performance Sport</h3>
-                <p class="price">R$ 189,90</p>
-                <button class="btn-add" onclick="addToCart('Tênis Performance Sport', 189.90)">
-                    Adicionar ao Carrinho
-                </button>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-image">
-                <img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=500" alt="Perfume">
-            </div>
-            <div class="product-info">
-                <span class="category">Beleza</span>
-                <h3>Perfume Eau de Parfum</h3>
-                <p class="price">R$ 31150,00</p>
-                <button class="btn-add" onclick="addToCart('Perfume Eau de Parfum', 350.00)">
-                    Adicionar ao Carrinho
-                </button>
-            </div>
+        
+        <div class="cart-items" style="padding: 20px; flex-grow: 1; overflow-y: auto;">
+            {% for item in itens_carrinho %}
+                <div class="cart-item-row" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee;">
+                    <div>
+                        <strong style="color: #333; display: block;">{{ item.produto.nome }}</strong>
+                        <small style="color: #666;">{{ item.quantidade }}x R$ {{ item.produto.preco }}</small>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span style="font-weight: bold; color: #333;">R$ {{ item.subtotal }}</span>
+                        <a href="?remover={{ item.produto.id }}" style="color: #e74c3c; font-size: 1.1rem;"><i class="fa-solid fa-trash"></i></a>
+                    </div>
+                </div>
+            {% empty %}
+                <p style="text-align: center; color: #999; margin-top: 40px;">Seu carrinho está vazio.</p>
+            {% endfor %}
         </div>
 
-    </main>
+        <div class="cart-footer" style="padding: 20px; background: #f9f9f9; border-top: 1px solid #eee;">
+            <div style="display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: bold; margin-bottom: 15px; color: #333;">
+                <span>Total:</span>
+                <span>R$ {{ total_carrinho }}</span>
+            </div>
+            {% if itens_carrinho %}
+                <a href="{% url 'lojas:produtos_por_categoria' 'comida' %}?abrir=true" style="display: block; text-align: center; background: #2ecc71; color: white; padding: 12px; border-radius: 4px; font-weight: bold; text-decoration: none;">
+                    Ver Opções de Pagamento
+                </a>
+            {% endif %}
+        </div>
     </div>
-    <script src="script.js"></script>
 </body>
 </html>

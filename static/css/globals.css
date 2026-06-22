@@ -1,4 +1,4 @@
-/* CONFIGURAÇÕES BASE & RESET */
+
 * {
     margin: 0;
     padding: 0;
@@ -12,7 +12,7 @@ body {
     overflow-x: hidden;
 }
 
-/* NAVBAR ALINHADA */
+
 header {
     background-color: #1e293b;
     color: #fff;
@@ -32,10 +32,10 @@ header {
 }
 
 .logo span {
-    color: #34d399; /* Verde Esmeralda */
+    color: #34d399;
 }
 
-/* Menu Central de Links */
+
 .nav-menu {
     display: flex;
     gap: 2.2rem;
@@ -53,7 +53,7 @@ header {
     color: #34d399;
 }
 
-/* Botão de Login à Direita */
+
 .btn-login {
     background-color: transparent;
     color: #fff;
