@@ -10,6 +10,40 @@ from usuarios.services import nome_usuario, reservas_do_usuario
 from .models import Participante, Quadra, Reserva
 
 
+def _chave_sessao(request):
+    if not request.session.session_key:
+        request.session.save()
+
+    return request.session.session_key
+
+
+def _adicionar_participante(request, reserva, nome):
+    chave_sessao = _chave_sessao(request)
+    participante, criado = Participante.objects.get_or_create(
+        reserva=reserva,
+        chave_sessao=chave_sessao,
+        defaults={'nome': nome},
+    )
+
+    if not criado and participante.nome != nome:
+        participante.nome = nome
+        participante.save(update_fields=['nome'])
+
+    request.session['nome_jogador'] = nome
+    return participante, criado
+
+
+def _mensagens_validacao(request, erro):
+    if hasattr(erro, 'message_dict'):
+        grupos = erro.message_dict.values()
+    else:
+        grupos = [erro.messages]
+
+    for mensagens_erro in grupos:
+        for msg in mensagens_erro:
+            messages.error(request, msg)
+
+
 def quadras(request):
     """Lista quadras disponiveis e partidas publicas abertas."""
     filtro_tipo = request.GET.get('tipo')
@@ -21,10 +55,18 @@ def quadras(request):
     partidas_abertas = (
         Reserva.objects
         .select_related('quadra')
-        .filter(visibilidade='PUB', status='CON', data__gte=date.today())
+        .filter(visibilidade='PUB', status__in=['PEN', 'CON'], data__gte=date.today())
         .prefetch_related('participantes')
     )
     partidas_abertas = [reserva for reserva in partidas_abertas if reserva.eh_partida_aberta]
+    chave_sessao = request.session.session_key
+
+    for partida in partidas_abertas:
+        participantes = list(partida.participantes.all())
+        partida.participantes_lista = participantes
+        partida.ja_participa = bool(
+            chave_sessao and any(participante.chave_sessao == chave_sessao for participante in participantes)
+        )
 
     contexto = {
         'lista_de_quadras': lista_quadras,
@@ -59,6 +101,7 @@ def reservar(request, quadra_id):
             data=data_reserva,
             hora_inicio=hora_inicio,
             hora_fim=hora_fim,
+            status='CON' if visibilidade == 'PUB' else 'PEN',
             visibilidade=visibilidade,
         )
 
@@ -67,6 +110,7 @@ def reservar(request, quadra_id):
             reserva.save()
 
             if visibilidade == 'PUB':
+                _adicionar_participante(request, reserva, nome_cliente)
                 messages.success(
                     request,
                     f"Reserva da {quadra.nome} feita e aberta para outras pessoas entrarem "
@@ -80,9 +124,7 @@ def reservar(request, quadra_id):
 
             return redirect('quadras')
         except ValidationError as erro:
-            for mensagens_erro in erro.message_dict.values():
-                for msg in mensagens_erro:
-                    messages.error(request, msg)
+            _mensagens_validacao(request, erro)
 
     contexto = {
         'quadra': quadra,
@@ -136,20 +178,15 @@ def entrar_partida(request, reserva_id):
             messages.error(request, "Digite seu nome para entrar na partida.")
             return redirect('quadras')
 
-        if not request.session.session_key:
-            request.session.save()
-        chave_sessao = request.session.session_key
+        if not reserva.eh_partida_aberta:
+            messages.error(request, "Essa partida nao esta mais aberta para novos jogadores.")
+            return redirect('quadras')
 
-        request.session['nome_jogador'] = nome
+        _, criado = _adicionar_participante(request, reserva, nome)
 
-        ja_participa = Participante.objects.filter(reserva=reserva, chave_sessao=chave_sessao).exists()
-
-        if ja_participa:
+        if not criado:
             messages.error(request, "Voce ja esta nessa partida.")
-        elif reserva.esta_lotada:
-            messages.error(request, "Essa partida ja esta com as vagas completas.")
         else:
-            Participante.objects.create(reserva=reserva, nome=nome, chave_sessao=chave_sessao)
             messages.success(request, f"Voce entrou na partida em {reserva.quadra.nome}! Bom jogo!")
 
     return redirect('quadras')

@@ -138,7 +138,6 @@ body {
 .partida-card {
     background-color: #ffffff;
     border-radius: 14px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
     border-top: 4px solid #6366f1;
     padding: 1.8rem;
     display: flex;
@@ -178,9 +177,46 @@ body {
     font-weight: 600;
 }
 
+.participantes-lista {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 0.85rem;
+}
+
+.participantes-lista strong {
+    color: #1e293b;
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 0.6rem;
+}
+
+.participantes-lista ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    list-style: none;
+}
+
+.participantes-lista li {
+    background-color: #e0f2fe;
+    border: 1px solid #bae6fd;
+    border-radius: 999px;
+    color: #075985;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 0.32rem 0.65rem;
+}
+
+.participantes-lista p {
+    color: #94a3b8;
+    font-size: 0.86rem;
+}
+
 .form-entrar {
     display: flex;
-    gap: 0.5rem;
+    flex-direction: column;
+    gap: 0.7rem;
     margin-top: 0.4rem;
 }
 
@@ -194,8 +230,51 @@ body {
 }
 
 .form-entrar .btn-cta {
-    white-space: nowrap;
-    padding: 0.7rem 1rem;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 0.9rem 2.2rem;
+    text-align: center;
+    width: 100%;
+}
+
+.form-entrar .btn-cta:focus,
+.form-entrar .btn-cta:focus-visible {
+    border: none;
+    outline: none;
+}
+
+.partida-actions {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin-top: 0.4rem;
+}
+
+.ja-participa {
+    color: #047857;
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+
+.btn-sair-partida {
+    background-color: transparent;
+    border: 1px solid #ef4444;
+    border-radius: 6px;
+    color: #ef4444;
+    cursor: pointer;
+    font-size: 1.05rem;
+    font-weight: 800;
+    padding: 0.9rem 2.2rem;
+    text-align: center;
+    transition: all 0.2s;
+    width: 100%;
+}
+
+.btn-sair-partida:hover {
+    background-color: #ef4444;
+    color: #ffffff;
 }
 
 .reserva-container {

@@ -40,17 +40,40 @@
                 </div>
                 <p class="vagas-texto">{{ partida.vagas_ocupadas }}/{{ partida.vagas_totais }} confirmados</p>
 
-                <form method="POST" action="{% url 'entrar_partida' partida.id %}" class="form-entrar">
-                    {% csrf_token %}
-                    {% if user.is_authenticated %}
-                        <input type="hidden" name="nome" value="{{ meu_nome }}">
+                <div class="participantes-lista">
+                    <strong>Jogadores confirmados</strong>
+                    {% if partida.participantes_lista %}
+                        <ul>
+                            {% for participante in partida.participantes_lista %}
+                                <li>{{ participante.nome }}</li>
+                            {% endfor %}
+                        </ul>
                     {% else %}
-                        <input type="text" name="nome" value="{{ meu_nome }}" placeholder="Seu nome" required>
+                        <p>Ainda nao ha jogadores na lista.</p>
                     {% endif %}
-                    <button type="submit" class="btn-cta">
-                        Entrar pra jogar
-                    </button>
-                </form>
+                </div>
+
+                {% if partida.ja_participa %}
+                    <div class="partida-actions">
+                        <span class="ja-participa"><i class="fa-solid fa-check"></i> Voce esta na lista</span>
+                        <form method="POST" action="{% url 'sair_partida' partida.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-sair-partida">Sair da partida</button>
+                        </form>
+                    </div>
+                {% else %}
+                    <form method="POST" action="{% url 'entrar_partida' partida.id %}" class="form-entrar">
+                        {% csrf_token %}
+                        {% if user.is_authenticated %}
+                            <input type="hidden" name="nome" value="{{ meu_nome }}">
+                        {% else %}
+                            <input type="text" name="nome" value="{{ meu_nome }}" placeholder="Seu nome" required>
+                        {% endif %}
+                        <button type="submit" class="btn-cta">
+                            Entrar pra jogar
+                        </button>
+                    </form>
+                {% endif %}
             </div>
         {% empty %}
             <div class="quadras-vazio">

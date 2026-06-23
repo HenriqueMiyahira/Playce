@@ -143,6 +143,8 @@ header {
     display: inline-block;
     background-color: #10b981;
     color: #ffffff;
+    border: none;
+    outline: none;
     padding: 0.9rem 2.2rem;
     border-radius: 6px;
     text-decoration: none;
@@ -155,6 +157,12 @@ header {
 .btn-cta:hover {
     background-color: #059669;
     transform: translateY(-2px);
+}
+
+.btn-cta:focus,
+.btn-cta:focus-visible {
+    border: none;
+    outline: none;
 }
 
 .btn-cta:active {

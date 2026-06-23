@@ -121,7 +121,7 @@ class Reserva(models.Model):
     @property
     def eh_partida_aberta(self):
         """Partida pública, aprovada (confirmada), com vagas disponíveis."""
-        return self.visibilidade == 'PUB' and self.status == 'CON' and not self.esta_lotada
+        return self.visibilidade == 'PUB' and self.status != 'CAN' and not self.esta_lotada
 
 
 class Participante(models.Model):
